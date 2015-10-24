@@ -1,20 +1,41 @@
-# Android_M_requestPermissions
-Android M requestPermissions example
-    
-##  0.  three permission types
-+ Normal permissions
-    the system automatically grants the permission to the app
-+ Dangerous permissions
-    has to explicitly grant the permission to the app.
-+ Other permissions: 
-    [Random Musings on the Android 6.0 SDK](https://commonsware.com/blog/2015/08/17/random-musings-android-6p0-sdk.html)
-##  1. Normal permission(such as INTERNET)
-If your app lists [normal permissions](https://developer.android.com/intl/zh-cn/guide/topics/security/normal-permissions.html)
- in its manifest (that is, permissions that don't pose much risk to the user's privacy or the device's operation),
-  the system automatically grants those permissions. 
-##  2. Dangerous permissions(such as ACCESS_COARSE_LOCATION)
-[dangerous permissions](https://developer.android.com/intl/zh-cn/guide/topics/security/permissions.html#normal-dangerous)has to explicitly grant the permission to the app.
-```
+package com.example.captain_miao.permissions;
+
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.View;
+
+public class MainActivity extends AppCompatActivity {
+    public static final String TAG = "MainActivity";
+
+    String[] normalPermission = new String[]{Manifest.permission.INTERNET};
+    String[] dangerousPermission = new String[]{Manifest.permission.ACCESS_COARSE_LOCATION};
+    String[] settingsPermission = new String[]{Manifest.permission.WRITE_SETTINGS};
+
+
+    /**
+     * Id to identify a permission request.
+     */
+    private static final int ACCESS_COARSE_LOCATION_REQUEST_CODE = 7;
+    private static final int WRITE_SETTINGS_REQUEST_CODE = 8;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+    }
+
     //dangerous permission
     public void showRequestPermissionAccessCoarseLocation(View view) {
         Log.i(TAG, "Checking permission.");
@@ -72,9 +93,22 @@ If your app lists [normal permissions](https://developer.android.com/intl/zh-cn/
         }
 
     }
-```
-##  3. Other permissions(such as WRITE_SETTINGS)
-```
+
+
+
+    //normal permission
+    public void showPermissionInternet(View view) {
+        boolean hasSelfPermission = PermissionUtils.hasSelfPermissions(this, normalPermission);
+
+        new AlertDialog.Builder(this)
+                .setTitle("showPermissionInternet")
+                .setMessage(normalPermission[0] + "\r\n" + (hasSelfPermission ? "granted" : "not granted"))
+                .setPositiveButton(android.R.string.ok, null)
+                .show();
+    }
+
+
+
     //system settings permission
     public void showRequestPermissionWriteSettings(View view) {
         // for Settings.ACTION_MANAGE_WRITE_SETTINGS: Settings.System.canWrite
@@ -108,4 +142,4 @@ If your app lists [normal permissions](https://developer.android.com/intl/zh-cn/
 
         }
     }
-```
+}
