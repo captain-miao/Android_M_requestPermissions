@@ -8,12 +8,14 @@ Android M requestPermissions example
     has to explicitly grant the permission to the app.
 3. Other permissions:   
     [Random Musings on the Android 6.0 SDK](https://commonsware.com/blog/2015/08/17/random-musings-android-6p0-sdk.html)  
+    
 ##  1. Normal permission(such as INTERNET)      
 If your app lists [normal permissions](https://developer.android.com/intl/zh-cn/guide/topics/security/normal-permissions.html)
  in its manifest (that is, permissions that don't pose much risk to the user's privacy or the device's operation),
   the system automatically grants those permissions.     
+    
 ##  2. Dangerous permissions(such as ACCESS_COARSE_LOCATION)    
-[dangerous permissions](https://developer.android.com/intl/zh-cn/guide/topics/security/permissions.html#normal-dangerous)has to explicitly grant the permission to the app.  
+[dangerous permissions](https://developer.android.com/intl/zh-cn/guide/topics/security/permissions.html#normal-dangerous) has to explicitly grant the permission to the app.  
 ```
     //dangerous permission
     public void showRequestPermissionAccessCoarseLocation(View view) {
