@@ -1,5 +1,7 @@
 package com.example.captain_miao.grantap.annotation;
 
+import com.example.captain_miao.grantap.CheckAnnotatePermission;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -26,5 +28,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface PermissionGranted {
-  int requestCode();
+  int requestCode() default CheckAnnotatePermission.DEFAULT_REQUEST_CODE;
 }

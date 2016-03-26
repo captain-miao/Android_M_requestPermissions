@@ -28,8 +28,8 @@ import com.example.captain_miao.grantap.utils.PermissionUtils;
  * modify from https://github.com/ParkSangGwon/TedPermission
  */
 
-public class ListenerPermission {
-    private static final String TAG = "ListenerPermission";
+public class CheckPermission {
+    private static final String TAG = "CheckPermission";
     private final Context mContext;
     private PermissionListener mPermissionListener;
 
@@ -43,12 +43,12 @@ public class ListenerPermission {
     private boolean  mHasSettingBtn = false;
     private String   mPackageName;
 
-    public ListenerPermission(Context context) {
+    public CheckPermission(Context context) {
         this.mContext = context;
     }
 
-    public static ListenerPermission from(Context context) {
-        return new ListenerPermission(context);
+    public static CheckPermission from(Context context) {
+        return new CheckPermission(context);
     }
 
     /**
@@ -56,7 +56,7 @@ public class ListenerPermission {
      * @param listener
      * @return
      */
-    public ListenerPermission setPermissionListener(PermissionListener listener) {
+    public CheckPermission setPermissionListener(PermissionListener listener) {
         this.mPermissionListener = listener;
         return this;
     }
@@ -66,7 +66,7 @@ public class ListenerPermission {
      * @param permissions
      * @return
      */
-    public ListenerPermission setPermissions(String... permissions) {
+    public CheckPermission setPermissions(String... permissions) {
         this.mPermissions = permissions;
         return this;
     }
@@ -77,7 +77,7 @@ public class ListenerPermission {
      * @return
      */
 
-    public ListenerPermission setRationaleMsg(String rationaleMessage) {
+    public CheckPermission setRationaleMsg(String rationaleMessage) {
         this.mRationaleMessage = rationaleMessage;
         return this;
     }
@@ -87,7 +87,7 @@ public class ListenerPermission {
      * @param stringRes
      * @return
      */
-    public ListenerPermission setRationaleMsg(@StringRes int stringRes) {
+    public CheckPermission setRationaleMsg(@StringRes int stringRes) {
         if (stringRes <= 0) {
             throw new IllegalArgumentException("Invalid value for RationaleMessage");
         }
@@ -100,7 +100,7 @@ public class ListenerPermission {
      * @param rationaleConfirmText
      * @return
      */
-    public ListenerPermission setRationaleConfirmText(String rationaleConfirmText) {
+    public CheckPermission setRationaleConfirmText(String rationaleConfirmText) {
 
         this.mRationaleConfirmText = rationaleConfirmText;
         return this;
@@ -110,7 +110,7 @@ public class ListenerPermission {
      * @param stringRes
      * @return
      */
-    public ListenerPermission setRationaleConfirmText(@StringRes int stringRes) {
+    public CheckPermission setRationaleConfirmText(@StringRes int stringRes) {
 
         if (stringRes <= 0) {
             throw new IllegalArgumentException("Invalid value for RationaleConfirmText");
@@ -126,7 +126,7 @@ public class ListenerPermission {
      * @param denyMessage
      * @return
      */
-    public ListenerPermission setDeniedMsg(String denyMessage) {
+    public CheckPermission setDeniedMsg(String denyMessage) {
         this.mDenyMessage = denyMessage;
         return this;
     }
@@ -135,7 +135,7 @@ public class ListenerPermission {
      * @param stringRes
      * @return
      */
-    public ListenerPermission setDeniedMsg(@StringRes int stringRes) {
+    public CheckPermission setDeniedMsg(@StringRes int stringRes) {
         if (stringRes <= 0) {
             throw new IllegalArgumentException("Invalid value for DeniedMessage");
         }
@@ -149,7 +149,7 @@ public class ListenerPermission {
      * @param stringRes
      * @return
      */
-    public ListenerPermission setDeniedCloseButtonText(@StringRes int stringRes) {
+    public CheckPermission setDeniedCloseButtonText(@StringRes int stringRes) {
 
         if (stringRes <= 0) {
             throw new IllegalArgumentException("Invalid value for DeniedCloseButtonText");
@@ -163,7 +163,7 @@ public class ListenerPermission {
      * @param deniedCloseButtonText
      * @return
      */
-    public ListenerPermission setDeniedCloseButtonText(String deniedCloseButtonText) {
+    public CheckPermission setDeniedCloseButtonText(String deniedCloseButtonText) {
 
         this.mDeniedCloseButtonText = deniedCloseButtonText;
         return this;
@@ -174,7 +174,7 @@ public class ListenerPermission {
      * @param hasSettingBtn
      * @return
      */
-    public ListenerPermission setGotoSettingButton(boolean hasSettingBtn) {
+    public CheckPermission setGotoSettingButton(boolean hasSettingBtn) {
 
         this.mHasSettingBtn = hasSettingBtn;
         return this;
@@ -185,7 +185,7 @@ public class ListenerPermission {
      * @param packageName
      * @return
      */
-    public ListenerPermission setPackageName(String packageName) {
+    public CheckPermission setPackageName(String packageName) {
 
         this.mPackageName = packageName;
         return this;
@@ -195,9 +195,9 @@ public class ListenerPermission {
     public void check() {
 
         if (mPermissionListener == null) {
-            throw new NullPointerException("You must setPermissionListener() on ListenerPermission");
+            throw new NullPointerException("You must setPermissionListener() on CheckPermission");
         } else if (ObjectUtils.isEmpty(mPermissions)) {
-            throw new NullPointerException("You must setPermissions() on ListenerPermission");
+            throw new NullPointerException("You must setPermissions() on CheckPermission");
         }
 
 

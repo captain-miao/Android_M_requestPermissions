@@ -35,12 +35,13 @@ import java.lang.reflect.Method;
  * modify from https://github.com/ParkSangGwon/TedPermission
  */
 
-public class AnnotatePermission implements PermissionListener {
-    private static final String TAG = "AnnotatePermission";
+public class CheckAnnotatePermission implements PermissionListener {
+    private static final String TAG = "CheckAnnotatePermission";
+    public static final int DEFAULT_REQUEST_CODE = 666;
     private Object   object;
     private final Context mContext;
 
-    private int      mRequestCode;
+    private int      mRequestCode = DEFAULT_REQUEST_CODE;
     private String[] mPermissions;
     private String   mRationaleConfirmText;
     private String   mRationaleMessage;
@@ -51,13 +52,13 @@ public class AnnotatePermission implements PermissionListener {
     private boolean  mHasSettingBtn = false;
     private String   mPackageName;
 
-    public AnnotatePermission(Object object, Context context) {
+    public CheckAnnotatePermission(Object object, Context context) {
         this.object = object;
         this.mContext = context;
     }
 
-    public static AnnotatePermission from(Object object, Context context) {
-        return new AnnotatePermission(object, context);
+    public static CheckAnnotatePermission from(Object object, Context context) {
+        return new CheckAnnotatePermission(object, context);
     }
 
     /**
@@ -65,7 +66,7 @@ public class AnnotatePermission implements PermissionListener {
      * @param requestCode
      * @return
      */
-    public AnnotatePermission addRequestCode(int requestCode){
+    public CheckAnnotatePermission addRequestCode(int requestCode){
       this.mRequestCode = requestCode;
       return this;
     }
@@ -76,7 +77,7 @@ public class AnnotatePermission implements PermissionListener {
      * @param permissions
      * @return
      */
-    public AnnotatePermission setPermissions(String... permissions) {
+    public CheckAnnotatePermission setPermissions(String... permissions) {
         this.mPermissions = permissions;
         return this;
     }
@@ -87,7 +88,7 @@ public class AnnotatePermission implements PermissionListener {
      * @return
      */
 
-    public AnnotatePermission setRationaleMsg(String rationaleMessage) {
+    public CheckAnnotatePermission setRationaleMsg(String rationaleMessage) {
         this.mRationaleMessage = rationaleMessage;
         return this;
     }
@@ -97,7 +98,7 @@ public class AnnotatePermission implements PermissionListener {
      * @param stringRes
      * @return
      */
-    public AnnotatePermission setRationaleMsg(@StringRes int stringRes) {
+    public CheckAnnotatePermission setRationaleMsg(@StringRes int stringRes) {
         if (stringRes <= 0) {
             throw new IllegalArgumentException("Invalid value for RationaleMessage");
         }
@@ -110,7 +111,7 @@ public class AnnotatePermission implements PermissionListener {
      * @param rationaleConfirmText
      * @return
      */
-    public AnnotatePermission setRationaleConfirmText(String rationaleConfirmText) {
+    public CheckAnnotatePermission setRationaleConfirmText(String rationaleConfirmText) {
 
         this.mRationaleConfirmText = rationaleConfirmText;
         return this;
@@ -120,7 +121,7 @@ public class AnnotatePermission implements PermissionListener {
      * @param stringRes
      * @return
      */
-    public AnnotatePermission setRationaleConfirmText(@StringRes int stringRes) {
+    public CheckAnnotatePermission setRationaleConfirmText(@StringRes int stringRes) {
 
         if (stringRes <= 0) {
             throw new IllegalArgumentException("Invalid value for RationaleConfirmText");
@@ -136,7 +137,7 @@ public class AnnotatePermission implements PermissionListener {
      * @param denyMessage
      * @return
      */
-    public AnnotatePermission setDeniedMsg(String denyMessage) {
+    public CheckAnnotatePermission setDeniedMsg(String denyMessage) {
         this.mDenyMessage = denyMessage;
         return this;
     }
@@ -145,7 +146,7 @@ public class AnnotatePermission implements PermissionListener {
      * @param stringRes
      * @return
      */
-    public AnnotatePermission setDeniedMsg(@StringRes int stringRes) {
+    public CheckAnnotatePermission setDeniedMsg(@StringRes int stringRes) {
         if (stringRes <= 0) {
             throw new IllegalArgumentException("Invalid value for DeniedMessage");
         }
@@ -159,7 +160,7 @@ public class AnnotatePermission implements PermissionListener {
      * @param stringRes
      * @return
      */
-    public AnnotatePermission setDeniedCloseButtonText(@StringRes int stringRes) {
+    public CheckAnnotatePermission setDeniedCloseButtonText(@StringRes int stringRes) {
 
         if (stringRes <= 0) {
             throw new IllegalArgumentException("Invalid value for DeniedCloseButtonText");
@@ -173,14 +174,14 @@ public class AnnotatePermission implements PermissionListener {
      * @param deniedCloseButtonText
      * @return
      */
-    public AnnotatePermission setDeniedCloseButtonText(String deniedCloseButtonText) {
+    public CheckAnnotatePermission setDeniedCloseButtonText(String deniedCloseButtonText) {
 
         this.mDeniedCloseButtonText = deniedCloseButtonText;
         return this;
     }
 
 
-    public AnnotatePermission setGotoSettingButton(boolean hasSettingBtn) {
+    public CheckAnnotatePermission setGotoSettingButton(boolean hasSettingBtn) {
 
         this.mHasSettingBtn = hasSettingBtn;
         return this;
@@ -191,7 +192,7 @@ public class AnnotatePermission implements PermissionListener {
      * @param packageName
      * @return
      */
-    public AnnotatePermission setPackageName(String packageName) {
+    public CheckAnnotatePermission setPackageName(String packageName) {
 
         this.mPackageName = packageName;
         return this;
