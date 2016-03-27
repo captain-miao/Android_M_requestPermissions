@@ -1,8 +1,10 @@
 # Android_M_requestPermissions
 1. simple Android permission request  
 2. support SYSTEM_ALERT_WINDOW and WRITE_SETTINGS permission request
-<br/><br/>
-## requestPermissions user GrantAndroidPermission library
+  
+<br/>
+  
+## GrantAndroidPermission library
 
 ### Gradle
 Get library from  [oss.sonatype.org.io](https://oss.sonatype.org/content/repositories/snapshots)
@@ -21,7 +23,6 @@ dependencies {
 ```
 
 <br/><br/>
-
 
 ### check permission use CheckPermission
 ```
@@ -160,9 +161,7 @@ If your app lists [normal permissions](https://developer.android.com/intl/zh-cn/
     public void showRequestPermissionWriteSettings(View view) {
         // for Settings.ACTION_MANAGE_WRITE_SETTINGS: Settings.System.canWrite
         // CommonsWare's blog post:https://commonsware.com/blog/2015/08/17/random-musings-android-6p0-sdk.html
-        boolean hasSelfPermission = PermissionUtils.hasSelfPermissions(this, settingsPermission);
-        // or
-        // boolean hasSelfPermission = Settings.System.canWrite(this);
+        boolean hasSelfPermission = Settings.System.canWrite(this);
         if(hasSelfPermission) {
             new AlertDialog.Builder(this)
                     .setTitle("showPermissionWriteSettings")
@@ -180,7 +179,7 @@ If your app lists [normal permissions](https://developer.android.com/intl/zh-cn/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == WRITE_SETTINGS_REQUEST_CODE) {
-            boolean hasSelfPermission = PermissionUtils.hasSelfPermissions(this, settingsPermission);
+            boolean hasSelfPermission = Settings.System.canWrite(this);
             new AlertDialog.Builder(this)
                     .setTitle("showPermissionInternet")
                     .setMessage(settingsPermission[0] + "\r\n" + (hasSelfPermission ? "granted" : "not granted"))
@@ -192,7 +191,7 @@ If your app lists [normal permissions](https://developer.android.com/intl/zh-cn/
 ```
 <br/><br/>
 ##License 
- ```code
+```
 Copyright 2016 captain_miao
 
 Licensed under the Apache License, Version 2.0 (the "License");
