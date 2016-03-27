@@ -187,22 +187,13 @@ public class CheckAnnotatePermission implements PermissionListener {
         return this;
     }
 
-    /**
-     * show the packageName setting button
-     * @param packageName
-     * @return
-     */
-    public CheckAnnotatePermission setPackageName(String packageName) {
-
-        this.mPackageName = packageName;
-        return this;
-    }
 
     // requestPermissions
     public void check() {
         if (ObjectUtils.isEmpty(mPermissions)) {
             mPermissions = PermissionUtils.findPermissionsWithRequestCode(object, object.getClass(), PermissionCheck.class, mRequestCode);
         }
+
         if (ObjectUtils.isEmpty(mPermissions)) {
             throw new NullPointerException("You must setPermissions()");
         } else {
@@ -223,7 +214,6 @@ public class CheckAnnotatePermission implements PermissionListener {
         intent.putExtra(ShadowPermissionActivity.EXTRA_PERMISSIONS, mPermissions);
         intent.putExtra(ShadowPermissionActivity.EXTRA_RATIONALE_MESSAGE, mRationaleMessage);
         intent.putExtra(ShadowPermissionActivity.EXTRA_RATIONALE_CONFIRM_TEXT, mRationaleConfirmText);
-        intent.putExtra(ShadowPermissionActivity.EXTRA_PACKAGE_NAME, mPackageName);
         intent.putExtra(ShadowPermissionActivity.EXTRA_SETTING_BUTTON, mHasSettingBtn);
         intent.putExtra(ShadowPermissionActivity.EXTRA_DENY_MESSAGE, mDenyMessage);
         intent.putExtra(ShadowPermissionActivity.EXTRA_DENIED_DIALOG_CLOSE_TEXT, mDeniedCloseButtonText);

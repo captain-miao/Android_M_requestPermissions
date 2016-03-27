@@ -1,22 +1,26 @@
 package com.example.captain_miao.grantap;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.WindowManager;
 
 import com.example.captain_miao.grantap.listeners.PermissionListener;
+import com.example.captain_miao.grantap.utils.PermissionUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Copyright 2016 Ted Park
@@ -40,6 +44,8 @@ public class ShadowPermissionActivity extends AppCompatActivity {
 
     public static final int REQ_CODE_PERMISSION_REQUEST = 110;
     public static final int REQ_CODE_REQUEST_SETTING = 119;
+    public static final int REQ_CODE_REQUEST_SYSTEM_ALERT_WINDOW = 120;
+    public static final int REQ_CODE_REQUEST_WRITE_SETTING = 121;
 
 
     public static final String EXTRA_PERMISSIONS = "permissions";
@@ -54,6 +60,10 @@ public class ShadowPermissionActivity extends AppCompatActivity {
     String rationale_message;
     String denyMessage;
     String[] permissions;
+    boolean hasRequestedSystemAlertWindow = false;
+    String permissionSystemAlertWindow;
+    boolean hasRequestedWriteSettings = false;
+    String permissionWriteSettings;
     String packageName;
 
     boolean hasSettingButton;
@@ -100,7 +110,7 @@ public class ShadowPermissionActivity extends AppCompatActivity {
             permissions = bundle.getStringArray(EXTRA_PERMISSIONS);
             rationale_message = bundle.getString(EXTRA_RATIONALE_MESSAGE);
             denyMessage = bundle.getString(EXTRA_DENY_MESSAGE);
-            packageName = bundle.getString(EXTRA_PACKAGE_NAME);
+            packageName = getPackageName();
             hasSettingButton = bundle.getBoolean(EXTRA_SETTING_BUTTON, false);
             settingButtonText = bundle.getString(EXTRA_SETTING_BUTTON_TEXT, getString(R.string.permission_setting));
             rationaleConfirmText = bundle.getString(EXTRA_RATIONALE_CONFIRM_TEXT, getString(R.string.permission_ok));
@@ -134,7 +144,7 @@ public class ShadowPermissionActivity extends AppCompatActivity {
         overridePendingTransition(0, 0);
     }
 
-    private void permissionDenied(ArrayList<String> deniedpermissions) {
+    private void permissionDenied(List<String> deniedpermissions) {
         if(mPermissionListener != null){
             mPermissionListener.permissionDenied();
             mPermissionListener = null;
@@ -144,19 +154,17 @@ public class ShadowPermissionActivity extends AppCompatActivity {
     }
 
 
-    private void checkPermissions(boolean fromOnActivityResult) {
+    private void checkPermissions(boolean isAllRequested) {
 
-        ArrayList<String> needPermissions = new ArrayList<>();
-
-        for (String permission : permissions) {
-            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
-                needPermissions.add(permission);
-            }
-        }
+        List<String> needPermissions = PermissionUtils.findDeniedPermissions(this, permissions);
 
         boolean showRationale = false;
         for (String permission : needPermissions) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+            if(!hasRequestedSystemAlertWindow && permission.equals(Manifest.permission.SYSTEM_ALERT_WINDOW)) {
+                permissionSystemAlertWindow = Manifest.permission.SYSTEM_ALERT_WINDOW;
+            } else if(!hasRequestedWriteSettings && permission.equals(Manifest.permission.WRITE_SETTINGS)) {
+                permissionWriteSettings = Manifest.permission.WRITE_SETTINGS;
+            } else if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
                 showRationale = true;
             }
         }
@@ -164,7 +172,7 @@ public class ShadowPermissionActivity extends AppCompatActivity {
 
         if (needPermissions.isEmpty()) {
             permissionGranted();
-        } else if (fromOnActivityResult) {
+        } else if (isAllRequested) {
             //From Setting Activity
             permissionDenied(needPermissions);
         } else if (showRationale && !TextUtils.isEmpty(rationale_message)) {
@@ -178,8 +186,22 @@ public class ShadowPermissionActivity extends AppCompatActivity {
 
     }
 
-    public void requestPermissions(ArrayList<String> needPermissions) {
-        ActivityCompat.requestPermissions(this, needPermissions.toArray(new String[needPermissions.size()]), REQ_CODE_PERMISSION_REQUEST);
+    @TargetApi(value = Build.VERSION_CODES.M)
+    public void requestPermissions(List<String> needPermissions) {
+        //first SYSTEM_ALERT_WINDOW
+        if (!hasRequestedSystemAlertWindow && !TextUtils.isEmpty(permissionSystemAlertWindow)) {
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:" + packageName));
+            startActivityForResult(intent, REQ_CODE_REQUEST_SYSTEM_ALERT_WINDOW);
+        } else if (!hasRequestedWriteSettings && !TextUtils.isEmpty(permissionWriteSettings)) {
+            //second WRITE_SETTINGS
+            Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS,
+                    Uri.parse("package:" + packageName));
+            startActivityForResult(intent, REQ_CODE_REQUEST_WRITE_SETTING);
+        }else{
+            //other permission
+            ActivityCompat.requestPermissions(this, needPermissions.toArray(new String[needPermissions.size()]), REQ_CODE_PERMISSION_REQUEST);
+        }
     }
 
 
@@ -204,7 +226,7 @@ public class ShadowPermissionActivity extends AppCompatActivity {
 
 
 
-    private void showRationaleDialog(final ArrayList<String> needPermissions) {
+    private void showRationaleDialog(final List<String> needPermissions) {
 
         new AlertDialog.Builder(this)
                 .setMessage(rationale_message)
@@ -267,9 +289,20 @@ public class ShadowPermissionActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case REQ_CODE_REQUEST_SETTING:
+            case REQ_CODE_REQUEST_SETTING: {
                 checkPermissions(true);
                 break;
+            }
+            case REQ_CODE_REQUEST_SYSTEM_ALERT_WINDOW: {
+                hasRequestedSystemAlertWindow = true;
+                checkPermissions(false);
+                break;
+            }
+            case REQ_CODE_REQUEST_WRITE_SETTING: {
+                hasRequestedWriteSettings = true;
+                checkPermissions(false);
+                break;
+            }
             default:
                 super.onActivityResult(requestCode, resultCode, data);
         }

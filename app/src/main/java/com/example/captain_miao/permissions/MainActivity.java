@@ -2,8 +2,6 @@ package com.example.captain_miao.permissions;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
@@ -22,11 +20,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
 
 
-    String[] dangerousPermission = new String[]{Manifest.permission.ACCESS_COARSE_LOCATION};
-    String[] settingsPermission = new String[]{Manifest.permission.WRITE_SETTINGS};
+    String[] dangerousPermission = new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.CAMERA};
 
-
-    private static final int WRITE_SETTINGS_REQUEST_CODE = 8;
 
 
     @Override
@@ -82,13 +77,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //system settings permission
+    //system settings write permission
+    String[] settingsPermission = new String[]{Manifest.permission.WRITE_SETTINGS};
+    private static final int WRITE_SETTINGS_REQUEST_CODE = 8;
     public void showRequestPermissionWriteSettings(View view) {
         // for Settings.ACTION_MANAGE_WRITE_SETTINGS: Settings.System.canWrite
         // CommonsWare's blog post:https://commonsware.com/blog/2015/08/17/random-musings-android-6p0-sdk.html
-        boolean hasSelfPermission = PermissionUtils.hasSelfPermissions(this, settingsPermission);
-        // or
-        // boolean hasSelfPermission = Settings.System.canWrite(this);
+        boolean hasSelfPermission = Settings.System.canWrite(this);
         if(hasSelfPermission) {
             new AlertDialog.Builder(this)
                     .setTitle("showPermissionWriteSettings")
@@ -96,23 +91,46 @@ public class MainActivity extends AppCompatActivity {
                     .setPositiveButton(android.R.string.ok, null)
                     .show();
         } else {
-            Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS,
-                            Uri.parse("package:" + getPackageName()));
-                    startActivityForResult(intent, WRITE_SETTINGS_REQUEST_CODE);
+            CheckPermission
+                    .from(this)
+                    .setPermissions(dangerousPermission)
+                    .setRationaleConfirmText("Request WRITE_SETTINGS")
+                    .setDeniedMsg("The WRITE_SETTINGS Denied")
+                    .setPermissionListener(new PermissionListener() {
+                        @Override
+                        public void permissionGranted() {
+                            Toast.makeText(MainActivity.this, "WRITE_SETTINGS Permission Granted", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void permissionDenied() {
+                            Toast.makeText(MainActivity.this, "WRITE_SETTINGS Permission Denied", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .check();
         }
     }
 
+    //SYSTEM_ALERT_WINDOW write permission
+    String[] systemAlertWindowPermission = new String[]{Manifest.permission.SYSTEM_ALERT_WINDOW};
+    public void showRequestPermissionAlertWindow(View view) {
+        CheckPermission
+                .from(this)
+                .setPermissions(systemAlertWindowPermission)
+                .setRationaleConfirmText("Request SYSTEM_ALERT_WINDOW")
+                .setDeniedMsg("The SYSTEM_ALERT_WINDOW Denied")
+                .setPermissionListener(new PermissionListener() {
+                    @Override
+                    public void permissionGranted() {
+                        Toast.makeText(MainActivity.this, "SYSTEM_ALERT_WINDOW Permission Granted", Toast.LENGTH_SHORT).show();
+                    }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == WRITE_SETTINGS_REQUEST_CODE) {
-            boolean hasSelfPermission = PermissionUtils.hasSelfPermissions(this, settingsPermission);
-            new AlertDialog.Builder(this)
-                    .setTitle("showPermissionWRITE_SETTINGS")
-                    .setMessage(settingsPermission[0] + "\r\n" + (hasSelfPermission ? "granted" : "not granted"))
-                    .setPositiveButton(android.R.string.ok, null)
-                    .show();
-
-        }
+                    @Override
+                    public void permissionDenied() {
+                        Toast.makeText(MainActivity.this, "SYSTEM_ALERT_WINDOW Permission Denied", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .check();
     }
+
 }

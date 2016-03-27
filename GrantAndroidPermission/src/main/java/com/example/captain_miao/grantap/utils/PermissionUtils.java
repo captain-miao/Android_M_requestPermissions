@@ -1,9 +1,11 @@
 package com.example.captain_miao.grantap.utils;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.webkit.PermissionRequest;
 
@@ -50,7 +52,17 @@ final public class PermissionUtils {
     public static List<String> findDeniedPermissions(Activity activity, String... permission) {
         List<String> denyPermissions = new ArrayList<>();
         for (String value : permission) {
-            if (activity.checkSelfPermission(value) != PackageManager.PERMISSION_GRANTED) {
+            // CommonsWare's blog post:https://commonsware.com/blog/2015/08/17/random-musings-android-6p0-sdk.html
+            //support SYSTEM_ALERT_WINDOW,WRITE_SETTINGS
+            if (value.equals(Manifest.permission.SYSTEM_ALERT_WINDOW)){
+                if(!Settings.canDrawOverlays(activity)){
+                    denyPermissions.add(value);
+                }
+            } else if(value.equals(Manifest.permission.WRITE_SETTINGS)){
+                if(!Settings.System.canWrite(activity)){
+                    denyPermissions.add(value);
+                }
+            } else if (activity.checkSelfPermission(value) != PackageManager.PERMISSION_GRANTED) {
                 denyPermissions.add(value);
             }
         }

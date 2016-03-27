@@ -1,5 +1,7 @@
 # Android_M_requestPermissions
-
+1. simple Android permission request  
+2. support SYSTEM_ALERT_WINDOW and WRITE_SETTINGS permission request
+<br/><br/>
 ## requestPermissions user GrantAndroidPermission library
 
 ### Gradle
@@ -23,32 +25,34 @@ dependencies {
 
 ### check permission use CheckPermission
 ```
-    public void showRequestPermissionAccessCoarseLocation(View view) {
+    //SYSTEM_ALERT_WINDOW write permission
+    String[] systemAlertWindowPermission = new String[]{Manifest.permission.SYSTEM_ALERT_WINDOW};
+    public void showRequestPermissionAlertWindow(View view) {
         CheckPermission
                 .from(this)
-                .setPermissions(dangerousPermission)
-                .setRationaleConfirmText("Request ACCESS_COARSE_LOCATION")
-                .setDeniedMsg("The ACCESS_COARSE_LOCATION Denied")
+                .setPackageName(getPackageName())
+                .setPermissions(systemAlertWindowPermission)
+                .setRationaleConfirmText("Request SYSTEM_ALERT_WINDOW")
+                .setDeniedMsg("The SYSTEM_ALERT_WINDOW Denied")
                 .setPermissionListener(new PermissionListener() {
                     @Override
                     public void permissionGranted() {
-                        Toast.makeText(MainActivity.this, "ACCESS_COARSE_LOCATION Permission Granted", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "SYSTEM_ALERT_WINDOW Permission Granted", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void permissionDenied() {
-                        Toast.makeText(MainActivity.this, "ACCESS_COARSE_LOCATION Permission Denied", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "SYSTEM_ALERT_WINDOW Permission Denied", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .check();
-
     }
 ```    
     
 ### check permission use CheckAnnotatePermission
 ```
     @PermissionCheck()
-    String[] normalPermission = new String[]{Manifest.permission.INTERNET};
+    String[] normalPermission = new String[]{Manifest.permission.ACCESS_COARSE_LOCATION};
     public void showPermissionInternet(View view) {
         CheckAnnotatePermission
                 .from(this, this)
@@ -56,11 +60,11 @@ dependencies {
     }
     @PermissionGranted()
     public void permissionGranted() {
-        Toast.makeText(this, "INTERNET Permission Granted", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "ACCESS_COARSE_LOCATION Permission Granted", Toast.LENGTH_SHORT).show();
     }
     @PermissionDenied()
     public void permissionDenied() {
-        Toast.makeText(this, "INTERNET Permission Denied", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "ACCESS_COARSE_LOCATION Permission Denied", Toast.LENGTH_SHORT).show();
     }
 ```
 

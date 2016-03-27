@@ -3,5 +3,6 @@
     <string name="show_normal_permission">show_normal_permission</string>
     <string name="show_dangerous_permission">show_dangerous_permission</string>
     <string name="show_settings_permission">show_settings_permission</string>
+    <string name="show_system_alert_window_permission">show_system_alert_window_permission</string>
     <string name="action_settings">Settings</string>
 </resources>

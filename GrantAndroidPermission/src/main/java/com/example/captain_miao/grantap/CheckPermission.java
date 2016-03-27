@@ -41,7 +41,6 @@ public class CheckPermission {
     private String   mDeniedCloseButtonText;
 
     private boolean  mHasSettingBtn = false;
-    private String   mPackageName;
 
     public CheckPermission(Context context) {
         this.mContext = context;
@@ -180,23 +179,15 @@ public class CheckPermission {
         return this;
     }
 
-    /**
-     * show the packageName setting button
-     * @param packageName
-     * @return
-     */
-    public CheckPermission setPackageName(String packageName) {
-
-        this.mPackageName = packageName;
-        return this;
-    }
 
     // requestPermissions
     public void check() {
 
         if (mPermissionListener == null) {
             throw new NullPointerException("You must setPermissionListener() on CheckPermission");
-        } else if (ObjectUtils.isEmpty(mPermissions)) {
+        }
+
+        if (ObjectUtils.isEmpty(mPermissions)) {
             throw new NullPointerException("You must setPermissions() on CheckPermission");
         }
 
@@ -217,7 +208,6 @@ public class CheckPermission {
         intent.putExtra(ShadowPermissionActivity.EXTRA_PERMISSIONS, mPermissions);
         intent.putExtra(ShadowPermissionActivity.EXTRA_RATIONALE_MESSAGE, mRationaleMessage);
         intent.putExtra(ShadowPermissionActivity.EXTRA_RATIONALE_CONFIRM_TEXT, mRationaleConfirmText);
-        intent.putExtra(ShadowPermissionActivity.EXTRA_PACKAGE_NAME, mPackageName);
         intent.putExtra(ShadowPermissionActivity.EXTRA_SETTING_BUTTON, mHasSettingBtn);
         intent.putExtra(ShadowPermissionActivity.EXTRA_DENY_MESSAGE, mDenyMessage);
         intent.putExtra(ShadowPermissionActivity.EXTRA_DENIED_DIALOG_CLOSE_TEXT, mDeniedCloseButtonText);
