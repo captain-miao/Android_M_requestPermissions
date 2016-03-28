@@ -21,8 +21,15 @@ dependencies {
 }
 
 ```
-
-<br/><br/>
+<br/>
+### targetSdkVersion
+```
+android {
+    //must set targetSdkVersion 23，otherwise checkSelfPermission() always return PERMISSION_GRANTED
+    targetSdkVersion 23
+}
+```
+<br/>
 
 ### check permission use CheckPermission
 ```
