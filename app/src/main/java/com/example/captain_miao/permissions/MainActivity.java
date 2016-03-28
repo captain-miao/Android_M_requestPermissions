@@ -53,9 +53,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
                 .check();
-
-        Toast.makeText(this, PermissionChecker.checkSelfPermission(this, Manifest.permission.CAMERA) + "", Toast.LENGTH_SHORT).show();
-
     }
 
 

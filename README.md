@@ -1,6 +1,7 @@
 # Android_M_requestPermissions
 1. simple Android permission request  
 2. support SYSTEM_ALERT_WINDOW and WRITE_SETTINGS permission request
+3. PermissionChecker.checkSelfPermission() check permission
   
 <br/>
   
@@ -17,17 +18,9 @@ repositories {
 }
 
 dependencies {
-    compile compile 'com.github.captain-miao:grantap:1.0.0'
+    compile compile 'com.github.captain-miao:grantap:1.0.2'
 }
 
-```
-<br/>
-### targetSdkVersion
-```
-android {
-    //must set targetSdkVersion 23，otherwise checkSelfPermission() always return PERMISSION_GRANTED
-    targetSdkVersion 23
-}
 ```
 <br/>
 
@@ -75,6 +68,31 @@ android {
         Toast.makeText(this, "ACCESS_COARSE_LOCATION Permission Denied", Toast.LENGTH_SHORT).show();
     }
 ```
+
+### about targetSdkVersion
+[PermissionChecker](http://developer.android.com/intl/ko/reference/android/support/v4/content/PermissionChecker.html)
+[ContextCompat](http://developer.android.com/intl/ko/reference/android/support/v4/content/ContextCompat.html)
+```
+android {
+    //targetSdkVersion 23，Context.checkSelfPermission() check permission
+    targetSdkVersion 23
+}
+//or
+android {
+    //targetSdkVersion 22，PermissionChecker.checkSelfPermission() check permission
+    targetSdkVersion 22
+}
+```
+<br/>
+### about permission check
+| ANDROID  | targetSdkVersion | Context.checkSelfPermission() | PermissionChecker.checkSelfPermission() | requestPermission |
+| ------------- | ------------- | ------------- | ----------------------------- | ------------- |
+| Android5.0    |	<= 22       |	GRANTED	    | GRANTED	| no  |
+| Android5.0    |	>= 23       |	GRANTED     | GRANTED	| yes  |
+| Android6.0    |	<= 22       |	GRANTED	    | GRANTED <br/> DENIED_APP_OP	| yes  |
+| Android6.0    |	>= 23       |	GRANTED	<br/> DENIED     | GRANTED <br/> DENIED	| yes  |
+
+<br/>
 
 ##Thanks 
 * [TedPermission](https://github.com/ParkSangGwon/TedPermission) - Easy check permission library for Android Marshmallow
