@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.v4.content.PermissionChecker;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -52,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
                 .check();
+
+        Toast.makeText(this, PermissionChecker.checkSelfPermission(this, Manifest.permission.CAMERA) + "", Toast.LENGTH_SHORT).show();
 
     }
 

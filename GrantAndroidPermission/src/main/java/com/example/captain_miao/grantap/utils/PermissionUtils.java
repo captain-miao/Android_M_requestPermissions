@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.PermissionChecker;
 import android.webkit.PermissionRequest;
 
 import com.example.captain_miao.grantap.annotation.PermissionDenied;
@@ -63,6 +64,8 @@ final public class PermissionUtils {
                     denyPermissions.add(value);
                 }
             } else if (activity.checkSelfPermission(value) != PackageManager.PERMISSION_GRANTED) {
+                denyPermissions.add(value);
+            } else if(PermissionChecker.checkSelfPermission(activity, value) != PackageManager.PERMISSION_GRANTED){
                 denyPermissions.add(value);
             }
         }
