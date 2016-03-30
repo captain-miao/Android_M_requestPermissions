@@ -88,7 +88,7 @@ android {
 | ANDROID  | targetSdkVersion | Context.checkSelfPermission() | PermissionChecker.checkSelfPermission() | requestPermission |
 | ------------- | ------------- | ------------- | ----------------------------- | ------------- |
 | Android5.0    |	<= 22       |	GRANTED	    | GRANTED	| no  |
-| Android5.0    |	>= 23       |	GRANTED     | GRANTED	| yes  |
+| Android5.0    |	>= 23       |	GRANTED     | GRANTED	| no  |
 | Android6.0    |	<= 22       |	GRANTED	    | GRANTED <br/> DENIED_APP_OP	| yes  |
 | Android6.0    |	>= 23       |	GRANTED	<br/> DENIED     | GRANTED <br/> DENIED	| yes  |
 
