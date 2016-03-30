@@ -63,9 +63,11 @@ final public class PermissionUtils {
                 if(!Settings.System.canWrite(activity)){
                     denyPermissions.add(value);
                 }
-            } else if (activity.checkSelfPermission(value) != PackageManager.PERMISSION_GRANTED) {
-                denyPermissions.add(value);
-            } else if(PermissionChecker.checkSelfPermission(activity, value) != PackageManager.PERMISSION_GRANTED){
+            }
+            //else if (activity.checkSelfPermission(value) != PackageManager.PERMISSION_GRANTED) {
+            //    denyPermissions.add(value);
+            //}
+            else if(PermissionChecker.checkSelfPermission(activity, value) != PackageManager.PERMISSION_GRANTED){
                 denyPermissions.add(value);
             }
         }
