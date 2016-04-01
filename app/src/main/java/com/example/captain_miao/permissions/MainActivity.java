@@ -198,6 +198,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Intent batteryIntent = new Intent();
                     String packageName = getPackageName();
                     PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+                    //http://developer.android.com/intl/ko/training/monitoring-device-state/doze-standby.html#support_for_other_use_cases
                     if (pm.isIgnoringBatteryOptimizations(packageName))
                         batteryIntent.setAction(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
                     else {
