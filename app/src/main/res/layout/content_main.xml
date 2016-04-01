@@ -128,4 +128,10 @@
         android:layout_height="wrap_content"
         android:text="@string/open_permission_setting"
         android:layout_gravity="center_vertical|right"/>
+    <Button
+        android:id="@+id/btn_open_battery_optimization_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/open_battery_optimization_settings"
+        android:layout_gravity="center_vertical|right"/>
 </LinearLayout>

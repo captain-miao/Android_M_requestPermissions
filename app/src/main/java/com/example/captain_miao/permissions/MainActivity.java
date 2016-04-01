@@ -1,9 +1,11 @@
 package com.example.captain_miao.permissions;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btn_request_permission_location).setOnClickListener(this);
         findViewById(R.id.btn_request_permission_system).setOnClickListener(this);
         findViewById(R.id.btn_open_permission_setting).setOnClickListener(this);
+        findViewById(R.id.btn_open_battery_optimization_settings).setOnClickListener(this);
 
         updatePermissionStatus();
     }
@@ -189,6 +192,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_open_permission_setting:
                 Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
                 startActivity(intent);
+                break;
+            case R.id.btn_open_battery_optimization_settings:
+                if(PermissionUtils.isOverMarshmallow()) {
+                    Intent batteryIntent = new Intent();
+                    String packageName = getPackageName();
+                    PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+                    if (pm.isIgnoringBatteryOptimizations(packageName))
+                        batteryIntent.setAction(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
+                    else {
+                        batteryIntent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+                        batteryIntent.setData(Uri.parse("package:" + packageName));
+                    }
+
+                    startActivity(batteryIntent);
+                } else {
+                    Toast.makeText(MainActivity.this, "battery optimizations on Android6.0", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }
