@@ -6,6 +6,7 @@
 <br/>
   
 ## GrantAndroidPermission library
+![request_permission](/screenshot/android-request-permission.gif?raw=true "request_permission")
 
 ### Gradle
 Get library from  [oss.sonatype.org.io](https://oss.sonatype.org/content/repositories/snapshots)

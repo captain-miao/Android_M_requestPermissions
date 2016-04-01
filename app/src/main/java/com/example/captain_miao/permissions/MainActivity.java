@@ -1,7 +1,10 @@
 package com.example.captain_miao.permissions;
 
 import android.Manifest;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -23,10 +26,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     String[] normalPermission = new String[]{Manifest.permission.INTERNET};
 
+    String[] dangerousPermissionCamera = new String[]{Manifest.permission.CAMERA};
     @PermissionCheck()
     String[] dangerousPermissionLocation = new String[]{Manifest.permission.ACCESS_COARSE_LOCATION};
 
-    String[] dangerousPermissionCamera = new String[]{Manifest.permission.CAMERA};
     //SYSTEM_ALERT_WINDOW write permission
     String[] systemAlertWindowPermission = new String[]{Manifest.permission.SYSTEM_ALERT_WINDOW};
         //system settings write permission
@@ -52,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btn_request_permission_camera).setOnClickListener(this);
         findViewById(R.id.btn_request_permission_location).setOnClickListener(this);
         findViewById(R.id.btn_request_permission_system).setOnClickListener(this);
+        findViewById(R.id.btn_open_permission_setting).setOnClickListener(this);
 
         updatePermissionStatus();
     }
@@ -181,6 +185,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             }
                         })
                         .check();
+                break;
+            case R.id.btn_open_permission_setting:
+                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
+                startActivity(intent);
                 break;
         }
     }

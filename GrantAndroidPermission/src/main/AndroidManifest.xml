@@ -4,6 +4,7 @@
     <application>
 
         <activity
+            android:label=""
             android:name=".ShadowPermissionActivity"
             android:theme="@style/Theme.Transparent"
             android:launchMode="singleTask">

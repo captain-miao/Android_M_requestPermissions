@@ -121,4 +121,11 @@
             android:text="@string/request_permission"
             android:layout_gravity="center_vertical"/>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_open_permission_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/open_permission_setting"
+        android:layout_gravity="center_vertical|right"/>
 </LinearLayout>

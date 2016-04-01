@@ -2,6 +2,7 @@
     <string name="app_name">GrantAP</string>
     <string name="request_permission">request</string>
     <string name="request_permission_all">request all</string>
+    <string name="open_permission_setting">setting</string>
     <string name="permission_internet" format="false">android.permission.INTERNET</string>
     <string name="normal_permission_status" format="false">normal permission status: %s</string>
 
@@ -13,8 +14,5 @@
     <string name="permission_system_alert_window" format="false">android.permission.SYSTEM_ALERT_WINDOW</string>
     <string name="system_permission_status" format="false">other system permission status: %s</string>
 
-    <string name="show_dangerous_permission">show_dangerous_permission</string>
-    <string name="show_settings_permission">show_settings_permission</string>
-    <string name="show_system_alert_window_permission">show_system_alert_window_permission</string>
     <string name="action_settings">Settings</string>
 </resources>
