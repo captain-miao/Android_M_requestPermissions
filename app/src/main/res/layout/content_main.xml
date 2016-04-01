@@ -14,31 +14,111 @@
     android:orientation="vertical">
 
     <Button
+        android:id="@+id/btn_request_permission_all"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:onClick="showPermissionInternet"
-        android:text="@string/show_normal_permission" />
+        android:text="@string/request_permission_all"
+        android:layout_gravity="center_vertical|right"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:onClick="showRequestPermissionAccessCoarseLocation"
-        android:text="@string/show_dangerous_permission" />
 
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:onClick="showRequestPermissionWriteSettings"
-        android:text="@string/show_settings_permission" />
+        android:text="@string/permission_internet"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_vertical_margin">
 
-    <Button
+        <TextView
+            android:id="@+id/tv_permission_internet"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btn_request_permission_internet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/request_permission"
+            android:layout_gravity="center_vertical"/>
+    </LinearLayout>
+
+
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:onClick="showRequestPermissionAlertWindow"
-        android:text="@string/show_system_alert_window_permission" />
+        android:text="@string/permission_camera"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:id="@+id/tv_permission_camera"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btn_request_permission_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/request_permission"
+            android:layout_gravity="center_vertical"/>
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/permission_access_coarse_location"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:id="@+id/tv_permission_location"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btn_request_permission_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/request_permission"
+            android:layout_gravity="center_vertical"/>
+    </LinearLayout>
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/permission_system_alert_window"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:id="@+id/tv_permission_system"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btn_request_permission_system"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/request_permission"
+            android:layout_gravity="center_vertical"/>
+    </LinearLayout>
 </LinearLayout>
