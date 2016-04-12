@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-    compile compile 'com.github.captain-miao:grantap:1.0.2'
+    compile compile 'com.github.captain-miao:grantap:1.0.2-SNAPSHOT'
 }
 
 ```
