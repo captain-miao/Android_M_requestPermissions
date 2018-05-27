@@ -45,13 +45,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mTvPermissionInternet = (TextView) findViewById(R.id.tv_permission_internet);
-        mTvPermissionCamera = (TextView) findViewById(R.id.tv_permission_camera);
-        mTvPermissionLocation = (TextView) findViewById(R.id.tv_permission_location);
-        mTvPermissionSystem = (TextView) findViewById(R.id.tv_permission_system);
+        mTvPermissionInternet = findViewById(R.id.tv_permission_internet);
+        mTvPermissionCamera = findViewById(R.id.tv_permission_camera);
+        mTvPermissionLocation = findViewById(R.id.tv_permission_location);
+        mTvPermissionSystem = findViewById(R.id.tv_permission_system);
         findViewById(R.id.btn_request_permission_all).setOnClickListener(this);
         findViewById(R.id.btn_request_permission_internet).setOnClickListener(this);
         findViewById(R.id.btn_request_permission_camera).setOnClickListener(this);

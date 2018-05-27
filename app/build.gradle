@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion project.COMPILE_SDK_VERSION as int
+    buildToolsVersion project.BUILD_TOOLS_VERSION
     defaultConfig {
         applicationId "com.example.captain_miao.myapplication"
-        minSdkVersion 22
-        targetSdkVersion 23
+        minSdkVersion project.MIN_SDK_VERSION
+        targetSdkVersion project.TARGET_SDK_VERSION
         versionCode 1
         versionName "1.0"
     }
@@ -26,18 +26,18 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support:design:23.4.0'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation 'junit:junit:4.12'
+    implementation "com.android.support:appcompat-v7:${project.SUPPORT_LIBRARIES_VERSION}"
+    implementation "com.android.support:design:${project.SUPPORT_LIBRARIES_VERSION}"
 
     //for memory leak
 //    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
-    debugCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6-SNAPSHOT'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6-SNAPSHOT'
+    testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6-SNAPSHOT'
 
 
 //    compile 'com.github.captain-miao:grantap:1.0.3'
-    compile project(':GrantAndroidPermission')
+    implementation project(':GrantAndroidPermission')
 }
